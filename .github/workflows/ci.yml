@@ -22,3 +22,21 @@ jobs:
         working-directory: ./bugtracker-backend
         run: |
           go test -v ./...
+
+  unit-tests-frontend:
+        needs: unit-tests-backend
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: "20"
+                cache: "npm"
+
+            - name: Execute Frontend Unit Tests
+              working-directory: ./bugtracker-frontend
+              run: |
+                npm install
+                npm test
